@@ -1,13 +1,14 @@
 import styled from 'styled-components'
 import colors from '../constants/colors'
-import { IoClose, IoReorderThree, IoLogoWhatsapp, IoLogoInstagram } from 'react-icons/io5'
-import { useEffect, useState } from 'react'
+import { IoClose, IoReorderThree, IoLogoWhatsapp, IoLogoInstagram, IoPersonOutline } from 'react-icons/io5'
+import { CSSProperties, useEffect, useState } from 'react'
 import { useMatch } from 'react-router-dom'
+import Login from '../Pages/Login'
 
 const Container = styled.div`
   z-index: 13;
   position: fixed;
-
+  justify-content: space-around;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -18,7 +19,7 @@ const Container = styled.div`
   background-color: white;
   box-shadow: 0 -1px #e7e7e7 inset;
   @media only screen and (max-width: 768px) {
-    #cactos, #plantas, #diversos, #sobre, #whatsappNavBar {
+    #whatsappNavBar {
       display: none;
     }
     #navbar {
@@ -32,9 +33,7 @@ const Container = styled.div`
 
 const Logo = styled.h1`
   font-size: 18px;
-  padding-inline: 50px;
   color: black;
-
   @media only screen and (max-width: 768px) {
     align-self: center;
     justify-self: center;
@@ -48,6 +47,10 @@ const SocialItems = styled.div`
   display: flex;
   flex-direction: row;
   justify-self: flex-end;
+  @media only screen and (max-width: 768px) {
+    align-self: center;
+    justify-self: center;
+  }
 `
 
 const ButtonNavBar = styled.button`
@@ -84,9 +87,10 @@ const SocialNavbar = styled.a`
   text-decoration: none;
   align-self: flex-end;
   justify-self: flex-end;
-
-  @media only screen and (max-width: 480px){
-    
+  margin-right: 10px;
+  
+  @media only screen and (max-width: 768px){
+    margin-right: 0px;
   }
 `
 
@@ -99,6 +103,14 @@ const SocialContainer = styled.a`
   color: white;
   text-decoration: none;
   margin-block: 10px;
+  margin-right: 5px;
+`
+
+const ContainerUserLogin = styled.button`
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background-color: white;
 `
 
 
@@ -116,7 +128,6 @@ function Navbar() {
     overflow: hidden;
     transition: 1s;
     color: white;
-
     flex-direction: column;
     padding-top: 80px;
     padding-left: 25px;
@@ -127,6 +138,7 @@ function Navbar() {
   font-weight: 400;
   padding-inline: 15px;
   text-decoration: none;
+  outline: none;
   padding-left: 13;
   font-size: 16px;
   @media only screen and (max-width: 768px) {
@@ -146,26 +158,48 @@ function Navbar() {
     body[0].setAttribute("style", `overflow-y: initial`)
   }, [url?.pathname])
 
+  const ActivePage = (_url: string) => {
+    const activePage: CSSProperties = {
+      color: colors.subtitle,
+    }
+
+    if (url?.pathname === _url) {
+      activePage.color = colors.green
+    }
+
+    return activePage;
+  }
+
   return (
     <>
       <Container>
-        <ButtonNavBar
-          onClick={() => setNavbarStatus(!navbarStatus)}>
+        <ButtonNavBar onClick={() => setNavbarStatus(!navbarStatus)}>
           {
             navbarStatus ? <IoClose />
               : <IoReorderThree />
           }
-          <Logo style={{ display: 'flex' }}>LOGO HERE</Logo>
         </ButtonNavBar>
+        <Logo>
+          LOGO HERE
+        </Logo>
         <NavBarItems>
-          <NavBarItem color="red" href='/cactos'>CACTOS</NavBarItem>
-          <NavBarItem color={'#0e0e0e'} href='/plantas'>PLANTAS</NavBarItem>
-          <NavBarItem color={'#c8ff00'} href='/vasos'>VASOS</NavBarItem>
-          <NavBarItem href='/diversos'>DIVERSOS</NavBarItem>
-          <NavBarItem href='/nuevos'>DIVERSOS</NavBarItem>
+          <NavBarItem
+            style={ActivePage('/cactos')}
+            href='/cactos'>CACTOS</NavBarItem>
+          <NavBarItem
+            style={ActivePage('/plantas')}
+            href='/plantas'>PLANTAS</NavBarItem>
+          <NavBarItem
+            style={ActivePage('/vasos')}
+            href='/vasos'>VASOS</NavBarItem>
+          <NavBarItem
+            style={ActivePage('/diversos')}
+            href='/diversos'>DIVERSOS</NavBarItem>
         </NavBarItems>
-        <NavBarItem href='/sobre'>SOBRE NÓS</NavBarItem>
-        <SocialItems>
+        <NavBarItem
+          style={ActivePage('/sobre')}
+          href='/sobre'>SOBRE NÓS</NavBarItem>
+        <SocialItems >
           <SocialNavbar href='https://instagram.com' target='_blank' id='instagramNavBar'>
             <IoLogoInstagram />
           </SocialNavbar>
@@ -173,7 +207,22 @@ function Navbar() {
             <IoLogoWhatsapp />
           </SocialNavbar>
         </SocialItems>
+        <ContainerUserLogin id='whatsappNavBar'>
+          <SocialNavbar>
+            <IoPersonOutline />
+          </SocialNavbar>
+        </ContainerUserLogin>
+        <Login id='whatsappNavBar' />
       </Container>
+
+
+      {/*
+            
+            PARTE DE BAIXO
+
+          */}
+
+
       <LeftNavbarContainer>
         <LeftBarItem href='/cactos'>
           CACTOS
@@ -191,11 +240,11 @@ function Navbar() {
           SOBRE NÓS
         </LeftBarItem>
         <SocialContainer href='https://instagram.com' target='_blank'>
-          <IoLogoInstagram size={36} style={{ marginRight: 5 }} />
+          <IoLogoInstagram size={36} />
           Acompanhe as novidades.
         </SocialContainer>
         <SocialContainer href='https://wa.link/fek4c9' target='_blank'>
-          <IoLogoWhatsapp size={36} style={{ marginRight: 5 }} />
+          <IoLogoWhatsapp size={36} />
           Compre pelo Whatsapp!
         </SocialContainer>
       </LeftNavbarContainer>

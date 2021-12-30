@@ -1,7 +1,6 @@
-import { IoCart } from 'react-icons/io5'
+import { IoCart, IoStar } from 'react-icons/io5'
 import styled from 'styled-components'
 import colors from '../constants/colors'
-// import ScrollReveal from 'scrollreveal'
 
 const img = 'https://cdn.leroymerlin.com.br/products/suculenta_pote_09_89209813_0001_600x600.jpg'
 
@@ -25,7 +24,7 @@ const Thumbnail = styled.img`
 `
 
 const Title = styled.h1`
-  padding-block: 10px;
+  padding-block: 7px;
   font-weight: 500;
   font-size: 20px;
   color: ${colors.heading};
@@ -71,14 +70,59 @@ const InfoContainer = styled.div`
   align-items: center;
 `
 
-function StoreItem() {
-  // ScrollReveal().reveal('.storeItem', { delay: 100 });
+const StarContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 16px;
+  padding: 0;
+  padding-block: 5px;
+  margin: 0;
+`
+
+const QualityCount = styled.span`
+  color: ${colors.subtitle};
+  font-size: 16px;
+  margin-left: 5px;
+`
+
+function StoreItem({ title = 'Suculenta', image = img, price = '15,00', quality = 3.5, ...rest }) {
   return (
-    <Container className="storeItem">
+    <Container className="storeItem" {...rest} >
       <Thumbnail src={img} />
       <InfoContainer>
         <LeftContainer>
           <Title>Suculenta</Title>
+          <StarContainer>
+            {
+              quality > 1 ?
+                <IoStar color={colors.green} /> :
+                <IoStar opacity={0.4} />
+            }
+            {
+              quality > 2 ?
+                <IoStar color={colors.green} /> :
+                <IoStar opacity={0.4} />
+            }
+            {
+              quality > 3 ?
+                <IoStar color={colors.green} /> :
+                <IoStar opacity={0.4} />
+            }
+            {
+              quality > 4 ?
+                <IoStar color={colors.green} /> :
+                <IoStar opacity={0.4} />
+            }
+            {
+              quality > 5 ?
+                <IoStar color={colors.green} /> :
+                <IoStar opacity={0.4} />
+            }
+            <QualityCount>
+              {quality}
+            </QualityCount>
+          </StarContainer>
           <Price>R${'15,00'}</Price>
         </LeftContainer>
         <BuyButton onClick={() => alert('comprou')}><IoCart fontSize={24} /></BuyButton>

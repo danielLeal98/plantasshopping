@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import StoreItem from '../components/StoreItem'
 import Loading from '../components/Loading'
 
+
 const Container = styled.div`
   padding-top: 0px;
   display: grid;
@@ -20,23 +21,22 @@ const Container = styled.div`
     grid-template-columns: repeat(3, 3fr);
   }
 
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width: 550px) {
     grid-template-columns: repeat(2, 2fr);
     gap: 7px;
     padding-inline: 10px;
   }
-
 
 `
 
 function Store() {
   const [loaded, setLoaded] = useState(false)
   const navActived = useMatch('*')
+
   useEffect(() => {
     window.scrollTo(0, 0)
     setInterval(() => setLoaded(true), 1000)
   }, [navActived])
-
 
 
   return (
